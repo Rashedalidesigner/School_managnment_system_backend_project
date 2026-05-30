@@ -6,7 +6,7 @@ export const pool = new Pool({
     host: config.DB_HOST,
     database: config.DB_NAME,
     password: config.DB_PASSWORD,
-    port: Number(config.Db_PORT)
+    port: Number(config.DB_PORT)
 });
 
 export const connectToDatabase = async () => {
@@ -111,11 +111,12 @@ export const connectToDatabase = async () => {
 `);
 
         await pool.query(`
-    CREATE TABLE IF NOT EXISTS assignments ( -- Fixed typo: 'asasignments' -> 'assignments'
+    CREATE TABLE IF NOT EXISTS assignments ( 
         id SERIAL PRIMARY KEY,
         title TEXT NOT NULL,
         description TEXT,
         class_id INT REFERENCES classes(id) ON DELETE CASCADE,
+        subject_id INT REFERENCES subject(id) ON DELETE CASCADE,
         teacher_id INT REFERENCES teacher(id) ON DELETE SET NULL,
         due_date DATE
     )
