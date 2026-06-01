@@ -31,6 +31,9 @@ const createstudent = async (req: Request, res: Response) => {
     try {
         const student = req.body;
         const newstudent = await studentService.createstudentInDb(student);
+        if (!newstudent) {
+            return sendResponse(res, false, 400, "Failed to create student");
+        }
         sendResponse(res, true, 201, "Student created successfully", newstudent);
     } catch (error) {
         sendResponse(res, false, 500, "Failed to create student");
@@ -42,6 +45,9 @@ const updatestudent = async (req: Request, res: Response) => {
         const id = Number(req.params.id);
         const student = req.body;
         const updatedstudent = await studentService.updatestudentInDb(id, student);
+        if (!updatedstudent) {
+            return sendResponse(res, false, 404, "Student not found");
+        }
         sendResponse(res, true, 200, "Student updated successfully", updatedstudent);
     } catch (error) {
         sendResponse(res, false, 500, "Failed to update student");
@@ -52,6 +58,9 @@ const deletestudent = async (req: Request, res: Response) => {
     try {
         const id = Number(req.params.id);
         const deletedstudent = await studentService.deletestudentInDb(id);
+        if (!deletedstudent) {
+            return sendResponse(res, false, 404, "Student not found");
+        }
         sendResponse(res, true, 200, "Student deleted successfully", deletedstudent);
     } catch (error) {
         sendResponse(res, false, 500, "Failed to delete student");

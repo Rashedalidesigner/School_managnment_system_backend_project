@@ -8,5 +8,4 @@ const server = () => {
     });
 }
 
-
 server();

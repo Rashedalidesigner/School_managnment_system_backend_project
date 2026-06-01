@@ -1,7 +1,7 @@
 export interface Attendance {
     id: number;
-    assignment_id: number;
+    class_id: number;
     student_id: number;
-    submission_file_link: string;
-    submitted_at: Date;
+    attendance_date: Date;
+    status: string;
 }

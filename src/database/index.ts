@@ -16,6 +16,7 @@ export const connectToDatabase = async () => {
         await pool.query(`
             CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,
+            name VARCHAR(200) NOT NULL,
             email VARCHAR(150) UNIQUE NOT NULL,
             phone VARCHAR(20) UNIQUE,
             password VARCHAR(255) NOT NULL,
@@ -31,7 +32,7 @@ export const connectToDatabase = async () => {
             ),
             profile_image TEXT,
             is_active BOOLEAN DEFAULT TRUE,
-            last_login TIMESTAMP,
+            last_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )`);
@@ -175,7 +176,7 @@ export const connectToDatabase = async () => {
         await pool.query(`
     CREATE TABLE IF NOT EXISTS library_books (
         id SERIAL PRIMARY KEY,
-        books_name TEXT NOT NULL, -- Fixed typo: 'auther' -> 'author' / 'quentity' -> 'quantity'
+        books_name TEXT NOT NULL,
         author TEXT,
         quantity INT DEFAULT 0
     )
