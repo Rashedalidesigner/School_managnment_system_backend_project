@@ -5,9 +5,9 @@ import { ParentController } from "./parent.controller";
 
 const router = Router();
 
-router.get("/", ParentController.getParent);
-router.post("/", ParentController.addParent);
-router.patch("/:id", ParentController.updateParent);
-router.delete("/:id", ParentController.deleteParent);
+router.get("/parent", ParentController.getParent);
+router.post("/parent", ParentController.addParent);
+router.patch("/parent/:id", ParentController.updateParent);
+router.delete("/parent/:id", ParentController.deleteParent);
 
 export default router;

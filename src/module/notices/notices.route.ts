@@ -3,9 +3,9 @@ import { NoticesController } from "./notices.controller";
 
 const router = Router();
 
-router.get("/", NoticesController.getNotices);
-router.post("/", NoticesController.addNotice);
-router.patch("/:id", NoticesController.updateNotice);
-router.delete("/:id", NoticesController.deleteNotice);
+router.get("/notice", NoticesController.getNotices);
+router.post("/notice", NoticesController.addNotice);
+router.patch("/notice/:id", NoticesController.updateNotice);
+router.delete("/notice/:id", NoticesController.deleteNotice);
 
 export default router;

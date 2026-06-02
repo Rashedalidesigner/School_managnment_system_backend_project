@@ -4,10 +4,10 @@ import { StudentParentsController } from "./student_parent.controller";
 
 const router = Router();
 
-router.get("/", StudentParentsController.getStudentParents);
-router.get("/:id", StudentParentsController.getStudentParentById);
-router.post("/", StudentParentsController.addStudentParent);
-router.put("/:id", StudentParentsController.updateStudentParent);
-router.delete("/:id", StudentParentsController.deleteStudentParent);
+router.get("/student-parent", StudentParentsController.getStudentParents);
+router.get("/student-parent/:id", StudentParentsController.getStudentParentById);
+router.post("/student-parent", StudentParentsController.addStudentParent);
+router.put("/student-parent/:id", StudentParentsController.updateStudentParent);
+router.delete("/student-parent/:id", StudentParentsController.deleteStudentParent);
 
 export default router;

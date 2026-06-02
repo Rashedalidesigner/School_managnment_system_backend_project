@@ -3,9 +3,9 @@ import { IssusBooksController } from "./issus_book.controller";
 
 const router = Router();
 
-router.get("/", IssusBooksController.getIssusBooks);
-router.post("/", IssusBooksController.addIssusBooks);
-router.patch("/:id", IssusBooksController.updateIssusBooks);
-router.delete("/:id", IssusBooksController.deleteIssusBooks);
+router.get("/issue-book", IssusBooksController.getIssusBooks);
+router.post("/issue-book", IssusBooksController.addIssusBooks);
+router.patch("/issue-book/:id", IssusBooksController.updateIssusBooks);
+router.delete("/issue-book/:id", IssusBooksController.deleteIssusBooks);
 
 export default router;

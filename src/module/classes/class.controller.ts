@@ -1,7 +1,6 @@
 import type { Request, Response } from "express";
 import { classService } from "./class.service";
 import { sendResponse } from "../../utility/SendResponse";
-import { send } from "node:process";
 
 const getclass = async (req: Request, res: Response) => {
     try {

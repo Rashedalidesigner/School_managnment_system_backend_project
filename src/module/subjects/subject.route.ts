@@ -4,10 +4,10 @@ import { SubjectController } from "./subject.controller";
 
 const router = Router();
 
-router.get("/", SubjectController.getsubjects);
-router.get("/:id", SubjectController.getsubjectById);
-router.post("/", SubjectController.addsubject);
-router.put("/:id", SubjectController.updatesubject);
-router.delete("/:id", SubjectController.deletesubject);
+router.get("/subject", SubjectController.getsubjects);
+router.get("/subject/:id", SubjectController.getsubjectById);
+router.post("/subject", SubjectController.addsubject);
+router.put("/subject/:id", SubjectController.updatesubject);
+router.delete("/subject/:id", SubjectController.deletesubject);
 
 export default router;

@@ -3,10 +3,10 @@ import { assignmentsController } from "./assignmets.controller";
 
 const router = Router();
 
-router.get("/", assignmentsController.getAssignments);
-router.post("/", assignmentsController.createAssignment);
-router.get("/:id", assignmentsController.getAssignmentById);
-router.patch("/:id", assignmentsController.updateAssignment);
-router.delete("/:id", assignmentsController.deleteAssignment);
+router.get("/assinment", assignmentsController.getAssignments);
+router.post("/assignment", assignmentsController.createAssignment);
+router.get("/assignment/:id", assignmentsController.getAssignmentById);
+router.patch("/assignment/:id", assignmentsController.updateAssignment);
+router.delete("/assignment/:id", assignmentsController.deleteAssignment);
 
 export const assignmentsRoute = router;

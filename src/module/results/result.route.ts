@@ -5,9 +5,9 @@ import { ResultController } from "./result.controller";
 
 const router = Router();
 
-router.get("/", ResultController.getResults);
-router.post("/", ResultController.addResult);
-router.patch("/:id", ResultController.updateResult);
-router.delete("/:id", ResultController.deleteResult);
+router.get("/result", ResultController.getResults);
+router.post("/result", ResultController.addResult);
+router.patch("/result/:id", ResultController.updateResult);
+router.delete("/result/:id", ResultController.deleteResult);
 
 export default router;

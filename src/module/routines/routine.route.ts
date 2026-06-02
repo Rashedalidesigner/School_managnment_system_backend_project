@@ -4,9 +4,9 @@ import { RoutineController } from "./routine.controller";
 
 const router = Router();
 
-router.get("/", RoutineController.getRoutines);
-router.post("/", RoutineController.addRoutine);
-router.patch("/:id", RoutineController.updateRoutine);
-router.delete("/:id", RoutineController.deleteRoutine);
+router.get("/routine", RoutineController.getRoutines);
+router.post("/routine", RoutineController.addRoutine);
+router.patch("/routine/:id", RoutineController.updateRoutine);
+router.delete("/routine/:id", RoutineController.deleteRoutine);
 
 export default router;

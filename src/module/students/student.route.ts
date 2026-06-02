@@ -3,11 +3,11 @@ import { studentController } from "./student.controller";
 
 const router = Router();
 
-router.get("/", studentController.getstudents);
-router.get("/:id", studentController.getstudentById);
-router.post("/", studentController.createstudent);
-router.put("/:id", studentController.updatestudent);
-router.delete("/:id", studentController.deletestudent);
+router.get("/student", studentController.getstudents);
+router.get("/student/:id", studentController.getstudentById);
+router.post("/student", studentController.createstudent);
+router.put("/student/:id", studentController.updatestudent);
+router.delete("/student/:id", studentController.deletestudent);
 
 
 export const studentRoute = router;
