@@ -10,6 +10,15 @@ const getRoutineFromDB = async () => {
     }
 }
 
+const getRoutinebyidFromDB = async (id: number) => {
+    try {
+        const result = await pool.query("SELECT * FROM routines WHERE id=1$", [id]);
+        return result.rows;
+    } catch (error: any) {
+        return error.message;
+    }
+}
+
 const addRoutineToDB = async (routine: Routine) => {
     try {
         const result = await pool.query("INSERT INTO routines (class_id, subject_id, teacher_id, day, start_time, end_time) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *", [routine.class_id, routine.subject_id, routine.teacher_id, routine.day, routine.start_time, routine.end_time]);
@@ -39,6 +48,7 @@ const deleteRoutineFromDB = async (id: number) => {
 
 export const RoutineService = {
     getRoutineFromDB,
+    getRoutinebyidFromDB,
     addRoutineToDB,
     updateRoutineInDB,
     deleteRoutineFromDB

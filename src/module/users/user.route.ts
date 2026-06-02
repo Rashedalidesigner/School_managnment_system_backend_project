@@ -10,4 +10,4 @@ router.post("user", UserController.addUser);
 router.put("/user/:id", UserController.updateUser);
 router.delete("/user/:id", UserController.deleteUser);
 
-export default router;
+export const userRoute = router;

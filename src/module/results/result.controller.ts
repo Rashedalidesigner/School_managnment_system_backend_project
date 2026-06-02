@@ -4,7 +4,20 @@ import { sendResponse } from "../../utility/SendResponse";
 
 const getResults = async (req: Request, res: Response) => {
     try {
-        const result = await ResultService.getserviceFromDb();
+        const result = await ResultService.getResultFromDb();
+        if (!result || result.length === 0) {
+            sendResponse(res, false, 404, "No results found");
+        }
+        sendResponse(res, true, 200, "Results fetched successfully", result);
+    } catch (error: any) {
+        sendResponse(res, false, 500, "Error fetching results", error.message);
+    }
+}
+
+const getResultsbyId = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const result = await ResultService.getResultByIdFromDb(Number(id));
         if (!result || result.length === 0) {
             sendResponse(res, false, 404, "No results found");
         }
@@ -54,6 +67,7 @@ const deleteResult = async (req: Request, res: Response) => {
 
 export const ResultController = {
     getResults,
+    getResultsbyId,
     addResult,
     updateResult,
     deleteResult

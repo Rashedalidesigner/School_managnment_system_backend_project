@@ -13,6 +13,18 @@ const getLibraryBooks = async (req: Request, res: Response) => {
         sendResponse(res, false, 500, "Error fetching library books", error.message);
     }
 }
+const getLibraryBooksByid = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const result = await LibrayBooksService.getLibrayBookByIdFromDb(Number(id));
+        if (!result || result.length === 0) {
+            sendResponse(res, false, 404, "No library books found");
+        }
+        sendResponse(res, true, 200, "Library Books fetched successfully", result);
+    } catch (error: any) {
+        sendResponse(res, false, 500, "Error fetching library books", error.message);
+    }
+}
 
 const addLibraryBook = async (req: Request, res: Response) => {
     try {
@@ -54,6 +66,7 @@ const deleteLibraryBook = async (req: Request, res: Response) => {
 
 export const LibrayBooksController = {
     getLibraryBooks,
+    getLibraryBooksByid,
     addLibraryBook,
     updateLibraryBook,
     deleteLibraryBook

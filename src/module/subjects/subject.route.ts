@@ -10,4 +10,4 @@ router.post("/subject", SubjectController.addsubject);
 router.put("/subject/:id", SubjectController.updatesubject);
 router.delete("/subject/:id", SubjectController.deletesubject);
 
-export default router;
+export const Subjectroute = router;

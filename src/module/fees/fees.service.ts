@@ -11,6 +11,15 @@ const getFeesFromDB = async () => {
 
 }
 
+const getFeesByIdFromDb = async (id: number) => {
+    try {
+        const result = await pool.query("SELECT * FROM fees WHERE id=1$", [id]);
+        return result.rows;
+    } catch (error: any) {
+        return error.message;
+    }
+}
+
 const addFeesToDB = async (fees: Fees) => {
     const { student_id: studentId } = fees;
     try {
@@ -44,6 +53,7 @@ const deleteFeesFromDB = async (id: number) => {
 
 export const FeesService = {
     getFeesFromDB,
+    getFeesByIdFromDb,
     addFeesToDB,
     updateFeesInDB,
     deleteFeesFromDB

@@ -10,6 +10,17 @@ const getNoticeFromDB = async () => {
     }
 }
 
+const getNoticeByidFromDb = async (id: number) => {
+
+    try {
+        const result = await pool.query("SELECT * FROM notices WHERE id=1$", [id]);
+        return result;
+    } catch (error: any) {
+        return error.message;
+    }
+}
+
+
 const addNoticeToDB = async (notice: Notice) => {
     try {
         const result = await pool.query("INSERT INTO notices (title, description, publish_date) VALUES ($1, $2, $3) RETURNING *", [notice.title, notice.description, notice.publish_date]);
@@ -40,6 +51,7 @@ const deleteNoticeFromDB = async (id: number) => {
 
 export const NoticesService = {
     getNoticeFromDB,
+    getNoticeByidFromDb,
     addNoticeToDB,
     updateNoticeInDB,
     deleteNoticeFromDB

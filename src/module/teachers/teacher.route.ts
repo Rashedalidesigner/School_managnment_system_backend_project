@@ -10,4 +10,5 @@ router.post("/teacher", TeacherController.addTeacher);
 router.put("/teacher/:id", TeacherController.updateTeacher);
 router.delete("/teacher/:id", TeacherController.deleteTeacher);
 
-export default router;
+
+export const TeacherRoute = router;

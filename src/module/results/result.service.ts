@@ -2,9 +2,18 @@ import type { Request, Response } from "express";
 import { pool } from "../../database";
 import type { Result } from "./result.interface";
 
-const getserviceFromDb = async () => {
+const getResultFromDb = async () => {
     try {
         const result = await pool.query("SELECT * FROM results");
+        return result.rows;
+    } catch (error: any) {
+        return error.message;
+    }
+}
+
+const getResultByIdFromDb = async (id: number) => {
+    try {
+        const result = await pool.query("SELECT * FROM results WHERE id=1$", [id]);
         return result.rows;
     } catch (error: any) {
         return error.message;
@@ -40,7 +49,8 @@ const deleteResultFromDb = async (id: number) => {
 }
 
 export const ResultService = {
-    getserviceFromDb,
+    getResultFromDb,
+    getResultByIdFromDb,
     addResultToDb,
     updateResultInDb,
     deleteResultFromDb

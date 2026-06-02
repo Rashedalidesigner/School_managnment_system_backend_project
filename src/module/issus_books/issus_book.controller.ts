@@ -15,6 +15,20 @@ const getIssusBooks = async (req: Request, res: Response) => {
     }
 }
 
+const getIssusBooksbyId = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const result = await IssusBooksService.getIssusBooksByIdFromDB(Number(id));
+        if (!result || result.length === 0) {
+            sendResponse(res, false, 404, "No issued books found");
+        }
+        sendResponse(res, true, 200, "Issued books fetched successfully", result);
+    } catch (error: any) {
+        sendResponse(res, false, 500, "Error fetching issued books", error.message);
+    }
+}
+
+
 const addIssusBooks = async (req: Request, res: Response) => {
     try {
         const result = await IssusBooksService.addIssusBooksToDB(req.body);
@@ -55,6 +69,7 @@ const deleteIssusBooks = async (req: Request, res: Response) => {
 
 export const IssusBooksController = {
     getIssusBooks,
+    getIssusBooksbyId,
     addIssusBooks,
     updateIssusBooks,
     deleteIssusBooks

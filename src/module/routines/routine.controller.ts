@@ -14,6 +14,19 @@ const getRoutines = async (req: Request, res: Response) => {
     }
 }
 
+const getRoutinesbyId = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const result = await RoutineService.getRoutinebyidFromDB(Number(id));
+        if (!result || result.length === 0) {
+            sendResponse(res, false, 404, "No routines found");
+        }
+        sendResponse(res, true, 200, "Routines fetched successfully", result);
+    } catch (error: any) {
+        sendResponse(res, false, 500, "Error fetching routines", error.message);
+    }
+}
+
 const addRoutine = async (req: Request, res: Response) => {
     try {
         const result = await RoutineService.addRoutineToDB(req.body);
@@ -54,6 +67,7 @@ const deleteRoutine = async (req: Request, res: Response) => {
 
 export const RoutineController = {
     getRoutines,
+    getRoutinesbyId,
     addRoutine,
     updateRoutine,
     deleteRoutine

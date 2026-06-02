@@ -10,6 +10,15 @@ const getIssusBooksFromDB = async () => {
     }
 }
 
+const getIssusBooksByIdFromDB = async (id: number) => {
+    try {
+        const result = await pool.query("SELECT * FROM issued_books WHERE id=1$", [id]);
+        return result.rows;
+    } catch (error: any) {
+        return error.message;
+    }
+}
+
 const addIssusBooksToDB = async (issusBooks: IssuedBook) => {
     try {
         const result = await pool.query("INSERT INTO issued_books (student_id, book_id, issue_date, return_date) VALUES ($1, $2, $3, $4) RETURNING *", [issusBooks.student_id, issusBooks.book_id, issusBooks.issue_date, issusBooks.return_date]);
@@ -39,6 +48,7 @@ const deleteIssusBooksFromDB = async (id: number) => {
 
 export const IssusBooksService = {
     getIssusBooksFromDB,
+    getIssusBooksByIdFromDB,
     addIssusBooksToDB,
     updateIssusBooksInDB,
     deleteIssusBooksFromDB

@@ -9,6 +9,14 @@ const getLibrayBookFromDb = async () => {
         return error.message;
     }
 }
+const getLibrayBookByIdFromDb = async (id: number) => {
+    try {
+        const result = await pool.query("SELECT * FROM library_books WHERE id=1$", [id]);
+        return result.rows;
+    } catch (error: any) {
+        return error.message;
+    }
+}
 
 const addLibrayBookToDb = async (librayBook: LibraryBook) => {
     try {
@@ -40,6 +48,7 @@ const deleteLibrayBookFromDb = async (id: number) => {
 
 export const LibrayBooksService = {
     getLibrayBookFromDb,
+    getLibrayBookByIdFromDb,
     addLibrayBookToDb,
     updateLibrayBookInDb,
     deleteLibrayBookFromDb

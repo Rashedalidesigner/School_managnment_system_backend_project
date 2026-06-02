@@ -14,6 +14,19 @@ const getParent = async (req: Request, res: Response) => {
     }
 }
 
+const getParentbyId = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const result = await ParentService.getParentbyIdFromDB(Number(id));
+        if (!result || result.length === 0) {
+            sendResponse(res, false, 404, "No parents found");
+        }
+        sendResponse(res, true, 200, "Parents fetched successfully", result);
+    } catch (error) {
+        sendResponse(res, false, 500, "Error fetching parents", null);
+    }
+}
+
 const addParent = async (req: Request, res: Response) => {
     try {
         const result = await ParentService.addParentToDB(req.body);
@@ -54,6 +67,7 @@ const deleteParent = async (req: Request, res: Response) => {
 
 export const ParentController = {
     getParent,
+    getParentbyId,
     addParent,
     updateParent,
     deleteParent

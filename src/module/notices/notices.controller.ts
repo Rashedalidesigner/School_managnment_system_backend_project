@@ -14,6 +14,19 @@ const getNotices = async (req: Request, res: Response) => {
     }
 }
 
+const getNoticesbyId = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const result = await NoticesService.getNoticeByidFromDb(Number(id));
+        if (!result || result.length === 0) {
+            sendResponse(res, false, 404, "No notices found");
+        }
+        sendResponse(res, true, 200, "Notices fetched successfully", result);
+    } catch (error: any) {
+        sendResponse(res, false, 500, "Error fetching notices", error.message);
+    }
+}
+
 const addNotice = async (req: Request, res: Response) => {
     try {
         const result = await NoticesService.addNoticeToDB(req.body);
@@ -54,6 +67,7 @@ const deleteNotice = async (req: Request, res: Response) => {
 
 export const NoticesController = {
     getNotices,
+    getNoticesbyId,
     addNotice,
     updateNotice,
     deleteNotice

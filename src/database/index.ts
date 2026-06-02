@@ -203,7 +203,6 @@ export const connectToDatabase = async () => {
         end_time TIME NOT NULL
     )
 `);
-
         console.log("Connected to the database successfully and tables created if not exist.");
     } catch (error) {
         console.error("Error connecting to the database:", error);

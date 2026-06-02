@@ -10,6 +10,15 @@ const getParentFromDB = async () => {
     }
 }
 
+const getParentbyIdFromDB = async (id: number) => {
+    try {
+        const result = await pool.query("SELECT * FROM parents WHERE id=1$", [id]);
+        return result.rows;
+    } catch (error: any) {
+        return error.message;
+    }
+}
+
 const addParentToDB = async (parent: Parent) => {
     try {
         const result = await pool.query("INSERT INTO parents (name,email,phone,address) VALUES ($1, $2, $3, $4) RETURNING *", [parent.name, parent.email, parent.phone, parent.address]);
@@ -39,6 +48,7 @@ const deleteParentFromDB = async (id: number) => {
 
 export const ParentService = {
     getParentFromDB,
+    getParentbyIdFromDB,
     addParentToDB,
     updateParentInDB,
     deleteParentFromDB

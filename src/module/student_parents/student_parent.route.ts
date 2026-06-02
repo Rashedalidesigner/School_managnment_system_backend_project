@@ -10,4 +10,5 @@ router.post("/student-parent", StudentParentsController.addStudentParent);
 router.put("/student-parent/:id", StudentParentsController.updateStudentParent);
 router.delete("/student-parent/:id", StudentParentsController.deleteStudentParent);
 
-export default router;
+
+export const StudentParentroute = router;

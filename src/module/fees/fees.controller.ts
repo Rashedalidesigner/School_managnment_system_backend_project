@@ -15,6 +15,19 @@ const getFees = async (req: Request, res: Response) => {
     }
 }
 
+const getFeesById = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const result = FeesService.getFeesByIdFromDb(Number(id));
+        if (!result) {
+            sendResponse(res, true, 500, "Result not found", result)
+        }
+        sendResponse(res, true, 200, "Fees fetched successfully", result);
+    } catch (error: any) {
+        sendResponse(res, false, 500, "not found data", error.message);
+    }
+}
+
 const addFees = async (req: Request, res: Response) => {
     try {
         const result = await FeesService.addFeesToDB(req.body);
@@ -57,6 +70,7 @@ const deleteFees = async (req: Request, res: Response) => {
 
 export const FeesController = {
     getFees,
+    getFeesById,
     addFees,
     updateFees,
     deleteFees
