@@ -5,7 +5,7 @@ import { attendanceService } from "./attendance.service";
 const getAttendance = async (req: Request, res: Response) => {
     try {
         const result = await attendanceService.getAttendanceFromDB();
-        if (!result) {
+        if (result.length === 0) {
             return sendResponse(res, true, 404, "No attendance records found");
         }
         return sendResponse(res, true, 200, "Attendance records fetched successfully", result);
@@ -18,6 +18,47 @@ const getAttendanceById = async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
         const result = await attendanceService.getAttendanceByIdFromDB(Number(id));
+        if (!result) {
+            return sendResponse(res, true, 404, "Attendance record not found");
+        }
+        return sendResponse(res, true, 200, "Attendance record fetched successfully", result);
+    } catch (error) {
+        return sendResponse(res, false, 500, "Failed to fetch attendance data");
+    }
+};
+const getAttendanceByclassId = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const result = await attendanceService.getAttendanceByclassIdFromDB(Number(id));
+        if (!result) {
+            return sendResponse(res, true, 404, "Attendance record not found");
+        }
+        return sendResponse(res, true, 200, "Attendance record fetched successfully", result);
+    } catch (error) {
+        return sendResponse(res, false, 500, "Failed to fetch attendance data");
+    }
+};
+const getAttendanceBystudentId = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const result = await attendanceService.getAttendanceBystudentIdFromDB(Number(id));
+        if (!result) {
+            return sendResponse(res, true, 404, "Attendance record not found");
+        }
+        return sendResponse(res, true, 200, "Attendance record fetched successfully", result);
+    } catch (error) {
+        return sendResponse(res, false, 500, "Failed to fetch attendance data");
+    }
+};
+const getAttendanceBydateId = async (req: Request, res: Response) => {
+    const rawDate = req.params.date;
+    const date = Array.isArray(rawDate) ? rawDate[0] : rawDate;
+
+    try {
+        if (!date) {
+            return sendResponse(res, false, 500, "plase enter date");
+        }
+        const result = await attendanceService.getAttendanceBydateIdFromDB(date);
         if (!result) {
             return sendResponse(res, true, 404, "Attendance record not found");
         }
@@ -69,6 +110,9 @@ const deleteAttendance = async (req: Request, res: Response) => {
 
 export const attendanceController = {
     getAttendance,
+    getAttendanceBydateId,
+    getAttendanceByclassId,
+    getAttendanceBystudentId,
     getAttendanceById,
     createAttendance,
     updateAttendance,

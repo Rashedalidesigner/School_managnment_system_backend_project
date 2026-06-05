@@ -26,8 +26,8 @@ const getclassByIdFromDb = async (id: number) => {
 const createclassInDb = async (classData: classes) => {
     try {
         const result = await pool.query(
-            "INSERT INTO classes (class_name, section_name, class_teacher_id) VALUES ($1, $2, $3) RETURNING *",
-            [classData.class_name, classData.section_name, classData.class_teacher_id]
+            "INSERT INTO classes (class_name, section_name) VALUES ($1, $2) RETURNING *",
+            [classData.class_name, classData.section_name]
         );
         return result.rows[0];
     } catch (error) {
@@ -39,8 +39,8 @@ const createclassInDb = async (classData: classes) => {
 const updateclassInDb = async (id: number, classData: classes) => {
     try {
         const result = await pool.query(
-            "UPDATE classes SET class_name = $1, section_name = $2, class_teacher_id = $3 WHERE id = $4 RETURNING *",
-            [classData.class_name, classData.section_name, classData.class_teacher_id, id]
+            "UPDATE classes SET class_name = $1, section_name = $2 WHERE id = $4 RETURNING *",
+            [classData.class_name, classData.section_name, id]
         );
         return result.rows[0];
     } catch (error) {

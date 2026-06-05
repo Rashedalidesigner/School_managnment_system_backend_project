@@ -1,10 +1,10 @@
 import type { Request, Response } from "express";
 import { sendResponse } from "../../utility/SendResponse";
-import { studentService } from "./student.service";
+import { studentervice } from "./student.service";
 
 const getstudents = async (req: Request, res: Response) => {
     try {
-        const students = await studentService.getstudentsFromDb();
+        const students = await studentervice.getstudentFromDb();
         if (students.length === 0) {
             return sendResponse(res, false, 500, "No students found");
         }
@@ -17,7 +17,19 @@ const getstudents = async (req: Request, res: Response) => {
 const getstudentById = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
-        const student = await studentService.getstudentByIdFromDb(Number(id));
+        const student = await studentervice.getstudentByIdFromDb(Number(id));
+        if (!student) {
+            return sendResponse(res, false, 404, "Student not found");
+        }
+        sendResponse(res, true, 200, "Student fetched successfully", student);
+    } catch (error) {
+        sendResponse(res, false, 500, "Failed to fetch student");
+    }
+};
+const getstudentByclassId = async (req: Request, res: Response) => {
+    try {
+        const id = req.params.id;
+        const student = await studentervice.getstudentByclassIdFromDb(Number(id));
         if (!student) {
             return sendResponse(res, false, 404, "Student not found");
         }
@@ -30,7 +42,7 @@ const getstudentById = async (req: Request, res: Response) => {
 const createstudent = async (req: Request, res: Response) => {
     try {
         const student = req.body;
-        const newstudent = await studentService.createstudentInDb(student);
+        const newstudent = await studentervice.createstudentInDb(student);
         if (!newstudent) {
             return sendResponse(res, false, 400, "Failed to create student");
         }
@@ -44,7 +56,7 @@ const updatestudent = async (req: Request, res: Response) => {
     try {
         const id = Number(req.params.id);
         const student = req.body;
-        const updatedstudent = await studentService.updatestudentInDb(id, student);
+        const updatedstudent = await studentervice.updatestudentInDb(id, student);
         if (!updatedstudent) {
             return sendResponse(res, false, 404, "Student not found");
         }
@@ -57,7 +69,7 @@ const updatestudent = async (req: Request, res: Response) => {
 const deletestudent = async (req: Request, res: Response) => {
     try {
         const id = Number(req.params.id);
-        const deletedstudent = await studentService.deletestudentInDb(id);
+        const deletedstudent = await studentervice.deletestudentInDb(id);
         if (!deletedstudent) {
             return sendResponse(res, false, 404, "Student not found");
         }
@@ -69,6 +81,7 @@ const deletestudent = async (req: Request, res: Response) => {
 
 export const studentController = {
     getstudents,
+    getstudentByclassId,
     getstudentById,
     createstudent,
     updatestudent,

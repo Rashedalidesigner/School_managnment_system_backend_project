@@ -28,6 +28,19 @@ const getsubjectById = async (req: Request, res: Response) => {
         sendResponse(res, false, 500, "Error fetching subject", error.message);
     }
 }
+const getsubjectByclassId = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const result = await SubjectService.getsubjectByclassIdFromDb(Number(id));
+        if (!result) {
+            sendResponse(res, false, 404, "Subject not found");
+        } else {
+            sendResponse(res, true, 200, "Subject fetched successfully", result);
+        }
+    } catch (error: any) {
+        sendResponse(res, false, 500, "Error fetching subject", error.message);
+    }
+}
 
 const addsubject = async (req: Request, res: Response) => {
     try {
@@ -73,6 +86,7 @@ const deletesubject = async (req: Request, res: Response) => {
 export const SubjectController = {
     getsubjects,
     getsubjectById,
+    getsubjectByclassId,
     addsubject,
     updatesubject,
     deletesubject

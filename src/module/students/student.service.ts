@@ -1,20 +1,29 @@
 import { pool } from "../../database";
 import type { Student } from "./student.interface";
 
-const getstudentsFromDb = async () => {
+const getstudentFromDb = async () => {
     try {
-        const result = await pool.query("SELECT * FROM students");
+        const result = await pool.query("SELECT * FROM student");
         return result.rows;
     } catch (error) {
-        console.error("Error fetching students:", error);
+        console.error("Error fetching student:", error);
         throw error;
     }
 };
 
 const getstudentByIdFromDb = async (id: number) => {
     try {
-        const result = await pool.query("SELECT * FROM students WHERE id = $1", [id]);
+        const result = await pool.query("SELECT * FROM student WHERE id = $1", [id]);
         return result.rows[0];
+    } catch (error) {
+        console.error(`Error fetching student with id ${id}:`, error);
+        throw error;
+    }
+};
+const getstudentByclassIdFromDb = async (id: number) => {
+    try {
+        const result = await pool.query("SELECT * FROM student WHERE class_id = $1", [id]);
+        return result.rows;
     } catch (error) {
         console.error(`Error fetching student with id ${id}:`, error);
         throw error;
@@ -22,11 +31,11 @@ const getstudentByIdFromDb = async (id: number) => {
 };
 
 const createstudentInDb = async (student: Student) => {
-    const { name, email, phone, date_of_birth, address, class_id, roll_number, admission_date, guardian_name } = student;
+    const { name, email, phone, date_of_birth, address, class_id, roll_number, admission_date, section } = student;
     try {
         const result = await pool.query(
-            "INSERT INTO students (name, email, phone, date_of_birth, address, class_id, roll_number, admission_date, guardian_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
-            [name, email, phone, date_of_birth, address, class_id, roll_number, admission_date, guardian_name]
+            "INSERT INTO student (name, email, phone, date_of_birth, address, class_id,section, roll_number, admission_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 9$) RETURNING *",
+            [name, email, phone, date_of_birth, address, class_id, section, roll_number, admission_date]
         );
         return result.rows[0];
     } catch (error) {
@@ -35,11 +44,11 @@ const createstudentInDb = async (student: Student) => {
     }
 };
 const updatestudentInDb = async (id: number, student: Student) => {
-    const { name, email, phone, date_of_birth, address, class_id, roll_number, admission_date, guardian_name } = student;
+    const { name, email, phone, date_of_birth, address, class_id, roll_number, admission_date, section } = student;
     try {
         const result = await pool.query(
-            "UPDATE students SET name = $1, email = $2, phone = $3, date_of_birth = $4, address = $5, class_id = $6, roll_number = $7, admission_date = $8, guardian_name = $9 WHERE id = $10 RETURNING *",
-            [name, email, phone, date_of_birth, address, class_id, roll_number, admission_date, guardian_name, id]
+            "UPDATE student SET name = $1, email = $2, phone = $3, date_of_birth = $4, address = $5, class_id = $6,section=7, roll_number = $8, admission_date = $9 WHERE id = $10 RETURNING *",
+            [name, email, phone, date_of_birth, address, class_id, section, roll_number, admission_date, id]
         );
         return result.rows[0];
     } catch (error) {
@@ -50,7 +59,7 @@ const updatestudentInDb = async (id: number, student: Student) => {
 
 const deletestudentInDb = async (id: number) => {
     try {
-        const result = await pool.query("DELETE FROM students WHERE id = $1 RETURNING *", [id]);
+        const result = await pool.query("DELETE FROM student WHERE id = $1 RETURNING *", [id]);
         return result.rows[0];
     } catch (error) {
         console.error(`Error deleting student with id ${id}:`, error);
@@ -58,8 +67,9 @@ const deletestudentInDb = async (id: number) => {
     }
 };
 
-export const studentService = {
-    getstudentsFromDb,
+export const studentervice = {
+    getstudentFromDb,
+    getstudentByclassIdFromDb,
     getstudentByIdFromDb,
     createstudentInDb,
     updatestudentInDb,

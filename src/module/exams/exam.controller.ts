@@ -2,10 +2,10 @@ import type { Request, Response } from "express";
 import { examService } from "./exam.service";
 import { sendResponse } from "../../utility/SendResponse";
 
-const getexam = (req: Request, res: Response) => {
-    const result = examService.getexamFromDB();
+const getexam = async (req: Request, res: Response) => {
+    const result = await examService.getexamFromDB();
     try {
-        if (!result) {
+        if (result.length === 0) {
             return sendResponse(res, true, 404, "No exam records found");
         }
         sendResponse(res, true, 200, "Exam records fetched successfully", result);

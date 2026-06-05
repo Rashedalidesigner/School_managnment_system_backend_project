@@ -19,6 +19,34 @@ const getAttendanceByIdFromDB = async (id: number) => {
     }
 }
 
+const getAttendanceByclassIdFromDB = async (id: number) => {
+    try {
+        const result = await pool.query("SELECT * FROM attendance WHERE class_id = $1", [id]);
+        console.log(result, "from service")
+        return result.rows;
+    } catch (error: any) {
+        return error.message
+    }
+}
+
+const getAttendanceBystudentIdFromDB = async (id: number) => {
+    try {
+        const result = await pool.query("SELECT * FROM attendance WHERE student_id = $1", [id])
+        return result.rows;
+    } catch (error: any) {
+        return error.message
+    }
+}
+
+const getAttendanceBydateIdFromDB = async (id: string) => {
+    try {
+        const result = await pool.query("SELECT * FROM attendance WHERE attendance_date = $1", [id])
+        return result.rows;
+    } catch (error: any) {
+        return error.message
+    }
+}
+
 const createAttendanceFromDB = async (attendance: Attendance) => {
     const { class_id, student_id, attendance_date, status } = attendance;
     try {
@@ -56,6 +84,9 @@ const deleteAttendanceFromDB = async (id: number) => {
 
 export const attendanceService = {
     getAttendanceFromDB,
+    getAttendanceBydateIdFromDB,
+    getAttendanceByclassIdFromDB,
+    getAttendanceBystudentIdFromDB,
     getAttendanceByIdFromDB,
     createAttendanceFromDB,
     updateAttendanceFromDB,

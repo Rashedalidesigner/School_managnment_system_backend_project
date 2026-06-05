@@ -53,8 +53,7 @@ export const connectToDatabase = async () => {
     CREATE TABLE IF NOT EXISTS classes (
         id SERIAL PRIMARY KEY,
         class_name VARCHAR(200) NOT NULL,
-        section_name VARCHAR(4),
-        class_teacher_id INT REFERENCES teacher(id) ON DELETE SET NULL
+        section_name VARCHAR(4)
     )
 `);
 
@@ -67,9 +66,9 @@ export const connectToDatabase = async () => {
         date_of_birth DATE, -- Fixed typo: 'date_of_brith' -> 'date_of_birth'
         address TEXT,
         class_id INT REFERENCES classes(id) ON DELETE SET NULL,
+        section VARCHAR(30),
         roll_number INT,
-        admission_date DATE,
-        guardian_name VARCHAR(200)
+        admission_date DATE
     )
 `);
 
@@ -77,7 +76,7 @@ export const connectToDatabase = async () => {
     CREATE TABLE IF NOT EXISTS subject (
         id SERIAL PRIMARY KEY,
         class_id INT REFERENCES classes(id) ON DELETE CASCADE,
-        subject_name VARCHAR(200) NOT NULL
+        subject_name TEXT[] NOT NULL
     )
 `);
 
@@ -105,7 +104,7 @@ export const connectToDatabase = async () => {
         id SERIAL PRIMARY KEY,
         student_id INT REFERENCES student(id) ON DELETE CASCADE,
         exam_id INT REFERENCES exams(id) ON DELETE CASCADE,
-        subject_id INT REFERENCES subject(id) ON DELETE CASCADE,
+        subject_mark JSONB,
         marks DOUBLE PRECISION,  
         grade VARCHAR(2)
     )
